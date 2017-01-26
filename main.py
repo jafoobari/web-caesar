@@ -52,11 +52,13 @@ class MainHandler(webapp2.RequestHandler):
 
         message = 'Hello world!'
 
-
         encryted_message = encrypt(message,13)
-        encryted_paragraph = '<p>' + encryted_message + '</p>'
 
-        content = page_header + header_2 + encryted_paragraph + page_footer
+        textarea = '<textarea>' + encryted_message + '</textarea>' + '</br>'
+        submit = '<input type="submit" value="Encrypt"/>'
+        form = '<form>' + textarea + submit + '</form>'
+
+        content = page_header + header_2 + form + page_footer
         self.response.write(content)
 
 app = webapp2.WSGIApplication([
