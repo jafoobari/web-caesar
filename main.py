@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import webapp2;import caesar
+import webapp2;import caesar;import cgi
 # html boilerplate for the top of every page
 
 title = "Web Ceasar"
@@ -61,8 +61,8 @@ class MainHandler(webapp2.RequestHandler):
         rotation = int(self.request.get("rotation"))
 
         encryted_message = encrypt(message, rotation)
-
-        content = build_page(encryted_message)
+        escaped_message = cgi.escape(encryted_message)
+        content = build_page(escaped_message)
 
         self.response.write(content)
 
