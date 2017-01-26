@@ -17,8 +17,8 @@
 import webapp2;import caesar;import cgi
 # html boilerplate for the top of every page
 
-title = "Web Ceasar"
-header = "Web Ceasar"
+title = "Web Caesar"
+header = "Web Caesar"
 
 page_header = """
 <!DOCTYPE html>
