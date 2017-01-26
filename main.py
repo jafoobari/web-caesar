@@ -35,30 +35,35 @@ page_footer = """
 </body>
 </html>
 """
-
+header_2 = '<h2>Enter some text to encrypt</h2>'
 encrypt = caesar.encrypt
+
+def build_page(textarea_content):
+    rot_label = "<label> Rotate by: </label>"
+    rotation_input = "<input type='number' name='rotation'>"
+
+    message_label = "<label> Enter some text to encrypt: </label>"
+    textarea = "<textarea name='message'>" + textarea_content + "</textarea>" + (2 * ("</br>"))
+    submit = "<input type='submit' value='Encrypt'/>"
+    form = "<form method='post'>" + rot_label + rotation_input + (
+    2 * ("</br>")) + message_label + textarea + submit + "</form>"
+
+    return page_header + form + page_footer
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        header_2 = '<h2>Enter some text to encrypt</h2>'
+        content = build_page("")
+        self.response.write(content)
 
-        encrypt_form = """
-               <form method="post">
-                    <input type="textarea" name="text"/>
+    def post(self):
+        message = self.request.get("message")
+        rotation = int(self.request.get("rotation"))
 
-                    <input type="submit" value="Encrypt"/>
-               </form>
-               """
+        encryted_message = encrypt(message, rotation)
 
-        message = 'Hello world!'
+        content = build_page(encryted_message)
 
-        encryted_message = encrypt(message,13)
-
-        textarea = '<textarea>' + encryted_message + '</textarea>' + '</br>'
-        submit = '<input type="submit" value="Encrypt"/>'
-        form = '<form>' + textarea + submit + '</form>'
-
-        content = page_header + header_2 + form + page_footer
         self.response.write(content)
 
 app = webapp2.WSGIApplication([
